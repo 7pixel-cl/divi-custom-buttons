@@ -64,3 +64,13 @@ function divi_custom_mixpanel_button_module() {
 }
 
 add_action( 'et_builder_ready', 'divi_custom_mixpanel_button_module' );
+function divi_custom_mixpanel_track_page_views() {
+    // Enqueue Mixpanel script
+    wp_enqueue_script( 'mixpanel', 'https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js', array(), null, true );
+
+    // Enqueue custom script for tracking page views
+    wp_register_script( 'et_pb_mixpanel_page_view', plugin_dir_url( __FILE__ ) . 'mixpanel-page-view.js', array( 'jquery', 'mixpanel' ), '1.0', true );
+    wp_enqueue_script( 'et_pb_mixpanel_page_view' );
+}
+add_action( 'wp_enqueue_scripts', 'divi_custom_mixpanel_track_page_views' );
+
